@@ -18,7 +18,7 @@ apply from: 'utils/package-info.gradle'
 
 version = calculateVersion()
 println('Mod version: ' + version)
-group = 'dev.socketmods.socketnukes'
+group = 'dev.socketmods'
 archivesBaseName = "socketnukes-${mc_version}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
