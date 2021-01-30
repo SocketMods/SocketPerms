@@ -24,6 +24,7 @@ archivesBaseName = "socketnukes-${mc_version}"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 sourceSets {
+    api
     data
     main.resources {
         srcDirs += data.resources.srcDirs
@@ -88,12 +89,14 @@ minecraft {
 }
 
 configurations {
+    apiImplementation.extendsFrom implementation
     dataImplementation.extendsFrom implementation
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
+    implementation sourceSets.api.output
     dataImplementation sourceSets.main.output
 }
 jar {
