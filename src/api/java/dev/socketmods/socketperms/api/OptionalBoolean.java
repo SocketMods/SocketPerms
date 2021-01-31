@@ -1,5 +1,6 @@
 package dev.socketmods.socketperms.api;
 
+import com.google.common.base.Preconditions;
 import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 
 import java.util.NoSuchElementException;
@@ -14,8 +15,8 @@ import java.util.function.Function;
  * map()} (maps a present value to another value) and {@link #ifPresent(BooleanConsumer) ifPresent()} (execute a block of code
  * if the value is present).
  * <p>
- * Because there is only three possible states for an {@code OptionalBoolean} (present value of {@code true}, present value of
- * {@code false}, no present value), there are three common instances which are stored and always used.
+ * Because there are only three possible states for an {@code OptionalBoolean} (present value of {@code true}, present value of
+ * {@code false}, no present value), there are three common instances which are stored and always reused.
  * <p>
  * This is a value-based class; use of identity-sensitive operations (including reference equality ({@code ==}), identity hash
  * code, or synchronization) on instances of {@code OptionalBoolean} may have unpredictable results and should be avoided.
@@ -109,23 +110,83 @@ public class OptionalBoolean {
         return value;
     }
 
-    public <T> Optional<T> map(Function<Boolean, T> function) {
+    /**
+     * If a value is present, apply the provided mapping function to it,
+     * and if the result is non-null, return an {@code Optional} describing the
+     * result.  Otherwise return an empty {@code Optional}.
+     *
+     * @param <T>    The type of the result of the mapping function
+     * @param mapper a mapping function to apply to the value, if present
+     *
+     * @return an {@code Optional} describing the result of applying a mapping
+     * function to the value of this {@code OptionalBoolean}, if a value is present,
+     * otherwise an empty {@code Optional}
+     *
+     * @throws NullPointerException if the mapping function is null
+     */
+    public <T> Optional<T> map(Function<Boolean, ? extends T> mapper) {
+        Preconditions.checkNotNull(mapper, "Mapping function must not be null");
         if (isPresent()) {
-            return Optional.ofNullable(function.apply(value));
+            return Optional.ofNullable(mapper.apply(value));
         }
         return Optional.empty();
     }
 
-    public <T> Optional<T> flatMap(Function<Boolean, Optional<T>> function) {
+    /**
+     * If a value is present, apply the provided {@code Optional}-bearing
+     * mapping function to it, return that result, otherwise return an empty
+     * {@code Optional}.  This method is similar to {@link #map(Function)},
+     * but the provided mapper is one whose result is already an {@code Optional},
+     * and if invoked, {@code flatMap} does not wrap it with an additional
+     * {@code Optional}.
+     *
+     * @param <T>    The type parameter to the {@code Optional} returned by
+     * @param mapper a mapping function to apply to the value, if present
+     *               the mapping function
+     *
+     * @return the result of applying an {@code Optional}-bearing mapping
+     * function to the value of this {@code Optional}, if a value is present,
+     * otherwise an empty {@code Optional}
+     *
+     * @throws NullPointerException if the mapping function is null or returns
+     *                              a null result
+     */
+    public <T> Optional<T> flatMap(Function<Boolean, Optional<T>> mapper) {
+        Preconditions.checkNotNull(mapper, "Mapping function must not be null");
         if (isPresent()) {
-            return function.apply(value);
+            final Optional<T> ret = mapper.apply(value);
+            Preconditions.checkNotNull(ret, "Returned Optional from mapping function must not be null");
+            return ret;
         }
         return Optional.empty();
     }
 
+    /**
+     * Have the specified consumer accept the value if a value is present,
+     * otherwise do nothing.
+     *
+     * @param consumer block to be executed if a value is present
+     *
+     * @throws NullPointerException if value is present and {@code consumer} is
+     *                              null
+     */
     public void ifPresent(BooleanConsumer consumer) {
         if (isPresent()) {
             consumer.accept(value);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * Returns a non-empty string representation of this object suitable for
+     * debugging.
+     *
+     * @return the string representation of this instance
+     */
+    @Override
+    public String toString() {
+        return isPresent
+            ? String.format("OptionalBoolean[%s]", value)
+            : "OptionalBoolean.empty";
     }
 }

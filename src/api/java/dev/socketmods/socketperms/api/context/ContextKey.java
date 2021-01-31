@@ -8,8 +8,6 @@ import java.util.Objects;
 /**
  * A context key for a {@link PermissionContext permission context holder}.
  * <p>
- *
- * <p>
  * A context key has an associated {@link ResourceLocation} as an ID. This may be used by permission handlers to identify
  * specific context keys and values, such as for handling based on dynamic permission rules.
  *

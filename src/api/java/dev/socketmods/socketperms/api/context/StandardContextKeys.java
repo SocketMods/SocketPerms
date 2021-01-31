@@ -26,6 +26,7 @@ public class StandardContextKeys {
     public static final ContextKey<Entity> THIS_ENTITY = createKey("this_entity", Entity.class);
     public static final ContextKey<Vector3d> THIS_POSITION = createKey("this_position", Vector3d.class);
     public static final ContextKey<Entity> TARGET_ENTITY = createKey("target_entity", Entity.class);
+    public static final ContextKey<Vector3d> TARGET_POSITION = createKey("target_position", Vector3d.class);
     public static final ContextKey<BlockPos> TARGET_BLOCK_POS = createKey("target_block_pos", BlockPos.class);
     public static final ContextKey<BlockState> TARGET_BLOCK_STATE = createKey("target_block_state", BlockState.class);
     public static final ContextKey<Direction> TARGET_BLOCK_FACE = createKey("target_block_face", Direction.class);

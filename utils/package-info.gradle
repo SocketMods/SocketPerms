@@ -29,8 +29,10 @@ task generatePackageInfos() {
                 // Create package-info string
                 def packageString = generatePackageInfo(getPackageName(sourceDirectory, directory))
 
-                // Skip if package-info.java exists and contains the expected string
+                // Skip if package-info.java exists and either equals the expected string or contains the string '@do-not-replace'
                 def packageInfo = new File(directory, "package-info.java")
+
+                if (packageInfo.exists() && packageInfo.text.contains("@do-not-replace")) return
                 if (packageInfo.exists() && packageString.equals(packageInfo.text.replace('\r\n', '\n'))) return
 
                 // Write package-info.java
