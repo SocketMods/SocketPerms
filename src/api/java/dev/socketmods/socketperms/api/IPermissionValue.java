@@ -34,6 +34,4 @@ public interface IPermissionValue {
     default OptionalDouble asDouble() {
         return OptionalDouble.empty();
     }
-
-    String toString();
 }

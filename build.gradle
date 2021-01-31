@@ -49,7 +49,7 @@ minecraft {
             ideaModule "${project.name}.main"
             mods {
                 socketperms {
-                    source sourceSets.main
+                    sources sourceSets.main, sourceSets.api
                 }
             }
         }
@@ -63,7 +63,7 @@ minecraft {
             ideaModule "${project.name}.main"
             mods {
                 socketperms {
-                    source sourceSets.main
+                    sources sourceSets.main, sourceSets.api
                 }
             }
         }
@@ -81,7 +81,7 @@ minecraft {
             ideaModule "${project.name}.data"
             mods {
                 socketperms {
-                    sources sourceSets.main, sourceSets.data
+                    sources sourceSets.main, sourceSets.api, sourceSets.data
                 }
             }
         }
@@ -89,7 +89,7 @@ minecraft {
 }
 
 configurations {
-    apiImplementation.extendsFrom implementation
+    apiImplementation.extendsFrom minecraft
     dataImplementation.extendsFrom implementation
 }
 

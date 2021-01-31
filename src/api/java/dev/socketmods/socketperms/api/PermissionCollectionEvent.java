@@ -26,7 +26,7 @@ public class PermissionCollectionEvent extends Event {
     private final String modid;
     private final List<ResourceLocation> permissionNodes = new ArrayList<>(100);
 
-    PermissionCollectionEvent(@Nullable String modid) {
+    public PermissionCollectionEvent(@Nullable String modid) {
         this.modid = modid;
     }
 

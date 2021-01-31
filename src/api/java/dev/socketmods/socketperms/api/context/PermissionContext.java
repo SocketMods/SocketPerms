@@ -149,6 +149,28 @@ public class PermissionContext {
         }
 
         /**
+         * Add the given {@linkplain ContextKey context key} and value pair to this context builder, if the value is
+         * non-{@code null}.
+         * <p>
+         * If there is a previous value associated with the given context key, it will be replaced.
+         *
+         * @param key   The context key
+         * @param value The context value, may be {@code null}
+         * @param <T>   The type of the context key and value
+         *
+         * @return This builder instance, for chaining
+         *
+         * @throws NullPointerException if the given context key is null
+         */
+        public <T> Builder addNullable(ContextKey<T> key, @Nullable T value) {
+            Preconditions.checkNotNull(key, "Context key must not be null");
+            if (value != null) {
+                contextValues.put(key, value);
+            }
+            return this;
+        }
+
+        /**
          * Build the {@link PermissionContext} object from the values in this builder.
          * <p>
          * If this builder is empty, then this will return {@link PermissionContext#EMPTY}.

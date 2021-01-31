@@ -15,8 +15,7 @@
  * {@code a}, the subpart of which is {@code b}, and the final subpart of which is {@code x}.
  *
  * <h2>Regarding Bukkit Syntax</h2>
- * The most popular syntax for permission nodes used by other server programs is the Bukkit syntax, where the permission node
- * is
+ * The most popular syntax for permission nodes used by other server programs is the Bukkit syntax, where the permission node is
  * a dot-separated ('{@code .}') list of parts, without any defined namespace. This syntax is from before the concept of
  * resource locations were introduced into the game, and has not changed since its inception.
  * <p>

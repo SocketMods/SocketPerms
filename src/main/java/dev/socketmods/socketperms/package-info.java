@@ -1,6 +1,6 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-package com.example.examplemod;
+package dev.socketmods.socketperms;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
