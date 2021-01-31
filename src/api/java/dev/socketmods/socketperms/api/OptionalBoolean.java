@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -125,12 +124,6 @@ public class OptionalBoolean {
     }
 
     public void ifPresent(BooleanConsumer consumer) {
-        if (isPresent()) {
-            consumer.accept(value);
-        }
-    }
-
-    public void ifPresent(Consumer<Boolean> consumer) {
         if (isPresent()) {
             consumer.accept(value);
         }
