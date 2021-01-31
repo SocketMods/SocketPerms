@@ -113,6 +113,10 @@ public class PermissionContext {
 
     /**
      * A builder for the permissions context object.
+     * <p>
+     * <strong>Note:</strong> This builder is <em>not</em> thread-safe, but the resulting {@code PermissionContext} object is
+     * immutable
+     * and thread-safe.
      *
      * @author SciWhiz12 [SocketMods]
      * @see PermissionContext

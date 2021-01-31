@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  */
 public class PermissionAPI {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static IPermissionHandler handler = DefaultPermissionHandler.INSTANCE;
+    private static volatile IPermissionHandler handler = DefaultPermissionHandler.INSTANCE;
 
     /**
      * Set the new global permission handler.
@@ -33,12 +33,15 @@ public class PermissionAPI {
      * <p>
      * If the {@code newHandler} is the same instance as the {@linkplain #getHandler() current permission handler}, then this
      * will have no effect.
+     * <p>
+     * This method is safe to call from {@linkplain net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent parallel
+     * modloading events}.
      *
      * @param newHandler The new permission handler
      *
      * @throws NullPointerException If {@code newHandler} is {@code null}
      */
-    public static void setHandler(IPermissionHandler newHandler) {
+    public static synchronized void setHandler(IPermissionHandler newHandler) {
         Preconditions.checkNotNull(newHandler, "New permission handler must not be null");
         if (handler == newHandler) return;
         LOGGER.info("Replacing permission handler {} with {}", handler.getClass().getName(), newHandler.getClass().getName());
